@@ -1,18 +1,22 @@
 package converter
 
 fun main() {
-    print("Enter a number and a measure of length: ")
+    while (true) {
+        print("Enter a number and a measure of length: ")
 
-    val input = readLine()!!.split(" ")
-    val number = input[0].toDouble()
-    val type = input[1].toLowerCase()
+        val input = readLine()!!.split(" ")
+        if (input[0].toLowerCase().equals("exit")) return
 
-    val meters = toMeters(number, type)
-    if (meters == -1.0) {
-        println("Incorrect input")
-        return
+        val number = input[0].toDouble()
+        val type = input[1].toLowerCase()
+
+        val meters = toMeters(number, type)
+        if (meters == -1.0) {
+            println("Incorrect input")
+            continue
+        }
+        println(createOutputString(type, number, "meter", meters))
     }
-    print(createOutputString(type, number, "meter", meters))
 }
 
 fun toMeters(number: Double, type: String): Double {
