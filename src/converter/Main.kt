@@ -2,20 +2,34 @@ package converter
 
 fun main() {
     while (true) {
-        print("Enter a number and a measure of length: ")
+        print("Enter what you want to convert (or exit): ")
 
         val input = readLine()!!.split(" ")
-        if (input[0].toLowerCase().equals("exit")) return
+
+        if (input.size == 1) {
+            if (input[0].toLowerCase().equals("exit")) {
+                return
+            } else {
+                println("Incorrect input")
+                continue
+            }
+        }
+        if (input.size != 4) {
+            println("Incorrect input")
+            continue
+        }
 
         val number = input[0].toDouble()
-        val type = input[1].toLowerCase()
+        val inType = input[1].toLowerCase()
+        val convType = input[3].toLowerCase()
 
-        val meters = toMeters(number, type)
+        val meters = toMeters(number, inType)
         if (meters == -1.0) {
             println("Incorrect input")
             continue
         }
-        println(createOutputString(type, number, "meter", meters))
+        val convValue = metersTo(meters, convType)
+        println(createOutputString(inType, number, convType, convValue))
     }
 }
 
@@ -29,6 +43,20 @@ fun toMeters(number: Double, type: String): Double {
         "yd", "yard", "yards" -> number * 0.9144
         "ft", "foot", "feet" -> number * 0.3048
         "in", "inch", "inches" -> number * 0.0254
+        else -> -1.0
+    }
+}
+
+fun metersTo(number: Double, type: String): Double {
+    return when (type) {
+        "m", "meter", "meters" -> number
+        "km", "kilometer", "kilometers" -> number / 1000.0
+        "cm", "centimeter", "centimeters" -> number / 0.01
+        "mm", "millimeter", "millimeters" -> number / 0.001
+        "mi", "mile", "miles" -> number / 1609.35
+        "yd", "yard", "yards" -> number / 0.9144
+        "ft", "foot", "feet" -> number / 0.3048
+        "in", "inch", "inches" -> number / 0.0254
         else -> -1.0
     }
 }
