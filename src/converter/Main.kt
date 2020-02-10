@@ -23,12 +23,14 @@ fun main() {
         val inType = input[1].toLowerCase()
         val convType = input[3].toLowerCase()
 
-        val meters = toMeters(number, inType)
-        if (meters == -1.0) {
+        val meters: Double = toMeters(number, inType)
+        val grams: Double = toGrams(number, inType)
+        if (meters == -1.0 && grams == -1.0) {
             println("Incorrect input")
             continue
         }
-        val convValue = metersTo(meters, convType)
+        val convValue = if (meters != -1.0) metersTo(meters, convType) else gramsTo(grams, convType)
+
         println(createOutputString(inType, number, convType, convValue))
     }
 }
@@ -61,6 +63,28 @@ fun metersTo(number: Double, type: String): Double {
     }
 }
 
+fun toGrams(value: Double, type: String): Double {
+    return when (type) {
+        "g", "gram", "grams" -> value
+        "kg", "kilogram", "kilograms" -> value * 1000
+        "mg", "milligram", "milligrams" -> value * 0.001
+        "lb", "pound", "pounds" -> value * 453.592
+        "oz", "ounce", "ounces" -> value * 28.3495
+        else -> -1.0
+    }
+}
+
+fun gramsTo(value: Double, type: String): Double {
+    return when (type) {
+        "g", "gram", "grams" -> value
+        "kg", "kilogram", "kilograms" -> value / 1000.0
+        "mg", "milligram", "milligrams" -> value / 0.001
+        "lb", "pound", "pounds" -> value / 453.592
+        "oz", "ounce", "ounces" -> value / 28.3495
+        else -> -1.0
+    }
+}
+
 fun createOutputString(inType: String, inValue: Double, convType: String, convValue: Double): String {
     val iType = convertTypeName(inType, inValue)
     val cType = convertTypeName(convType, convValue)
@@ -78,6 +102,13 @@ fun convertTypeName(typeName: String, value: Double): String {
         "yd", "yard", "yards" -> "yard${s(value)}"
         "ft", "foot", "feet" -> if (value == 1.0) "foot" else "feet"
         "in", "inch", "inches" -> if (value == 1.0) "inch" else "inches"
+
+        "g", "gram", "grams" -> "gram${s(value)}"
+        "kg", "kilogram", "kilograms" -> "kilogram${s(value)}"
+        "mg", "milligram", "milligrams" -> "milligram${s(value)}"
+        "lb", "pound", "pounds" -> "pound${s(value)}"
+        "oz", "ounce", "ounces" -> "ounce${s(value)}"
+
         else -> "Unknown type"
     }
 }
