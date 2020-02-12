@@ -1,6 +1,6 @@
 package converter
 
-enum class Unit(names: Array<String>) {
+enum class Unit(val names: Array<String>) {
     // length
     METER(arrayOf("m", "meter", "meters")),
     KILOMETER(arrayOf("km", "kilometer", "kilometers")),
@@ -18,9 +18,13 @@ enum class Unit(names: Array<String>) {
     POUND(arrayOf("lb", "pound", "pounds")),
     OUNCE(arrayOf("oz", "ounce", "ounces")),
 
+    // temperature
+    CELSIUS(arrayOf("c", "dc", "celsius", "degree celsius", "degrees celsius")),
+    FAHRENHEIT(arrayOf("f", "df", "fahrenheit", "degree fahrenheit", "degrees fahrenheit")),
+    KELVIN(arrayOf("k", "kelvin", "kelvins")),
+
     UNKNOWN(arrayOf("???"));
 
-    private val names: Array<String> = names
 
     companion object {
         fun getUnit(unitName: String): Unit {

@@ -51,3 +51,41 @@ fun gramsTo(value: Double, unit: Unit): Double {
         else -> -1.0
     }
 }
+
+fun celsiusTo(value: Double, unit: Unit): Double {
+    return when (unit) {
+        FAHRENHEIT -> celsiusToFahrenheit(value)
+        KELVIN -> celsiusToKelvin(value)
+        else -> Double.MIN_VALUE
+    }
+}
+
+fun fahrenheitTo(value: Double, unit: Unit): Double {
+    return when (unit) {
+        CELSIUS -> fahrenheitToCelsius(value)
+        KELVIN -> fahrenheitToKelvin(value)
+        else -> Double.MIN_VALUE
+    }
+}
+
+fun kelvinTo(value: Double, unit: Unit): Double {
+    return when (unit) {
+        CELSIUS -> kelvinToCelsius(value)
+        FAHRENHEIT -> kelvinToFahrenheit(value)
+        else -> Double.MIN_VALUE
+    }
+}
+
+fun celsiusToFahrenheit(value: Double): Double = value * 9 / 5 + 32
+
+fun celsiusToKelvin(value: Double): Double = value + 273.15
+
+fun fahrenheitToCelsius(value: Double): Double = (value - 32) * 5 / 9
+
+fun fahrenheitToKelvin(value: Double): Double = (value + 459.67) * 5 / 9
+
+fun kelvinToCelsius(value: Double): Double = value - 273.15
+
+fun kelvinToFahrenheit(value: Double): Double = value * 9 / 5 - 459.67
+
+

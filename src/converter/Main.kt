@@ -6,40 +6,56 @@ fun main() {
     Main().run()
 }
 
+private val regexInput =
+    Regex("(?i) *-?(\\d+|\\d+.\\d+) +([a-z]+|degree[s]? +(celsius|fahrenheit)) +[a-z]+ +([a-z]+|degree[s]? +(celsius|fahrenheit)) *")
+
+private val regexSplit = Regex("\\s+(degree[s]?\\s+)?")
+
 class Main {
     fun run() {
         while (true) {
             print("Enter what you want to convert (or exit): ")
 
-            val input = readLine()!!.split(" ")
-
-            if (input.size == 1) {
-                if (input[0].toLowerCase().equals("exit")) {
-                    return
-                } else {
-                    println("Incorrect input")
-                    continue
-                }
+            val notParsedInput = readLine()!!.trim()
+            if (notParsedInput.toLowerCase() == "exit") {
+                return
             }
-            if (input.size != 4) {
-                println("Incorrect input")
+            val input = parseInput(notParsedInput)
+            if (input.isEmpty()) {
+                println("Parse error")
                 continue
             }
 
             val inValue = input[0].toDouble()
             val enumInUnit = Unit.getUnit(input[1])
-            val enumOutUnit = Unit.getUnit(input[3])
+            val enumOutUnit = Unit.getUnit(input[2])
 
-            val meters: Double = toMeters(inValue, enumInUnit)
-            val grams: Double = toGrams(inValue, enumInUnit)
-            if (meters == -1.0 && grams == -1.0) {
-                println("Incorrect input")
-                continue
+
+            val outValue = when (enumInUnit) {
+                METER, KILOMETER, CENTIMETER, MILLIMETER, MILE, YARD, FOOT, INCH -> {
+                    metersTo(toMeters(inValue, enumInUnit), enumOutUnit)
+                }
+                GRAM, KILOGRAM, MILLIGRAM, POUND, OUNCE -> {
+                    gramsTo(toGrams(inValue, enumInUnit), enumOutUnit)
+                }
+                CELSIUS -> celsiusTo(inValue, enumOutUnit)
+                FAHRENHEIT -> fahrenheitTo(inValue, enumOutUnit)
+                KELVIN -> kelvinTo(inValue, enumOutUnit)
+
+                else -> Double.MIN_VALUE //String
             }
-            val outValue = if (meters != -1.0) metersTo(meters, enumOutUnit) else gramsTo(grams, enumOutUnit)
 
             println(createOutputString(enumInUnit, inValue, enumOutUnit, outValue))
         }
+    }
+
+    private fun parseInput(input: String): List<String> {
+
+        if (input.matches(regexInput)) {
+            val list = input.split(regexSplit)
+            return listOf(list[0], list[1], list[3])
+        }
+        return emptyList()
     }
 }
 
@@ -68,6 +84,10 @@ fun convertTypeName(unit: Unit, value: Double): String {
         MILLIGRAM -> "milligram$s"
         POUND -> "pound$s"
         OUNCE -> "ounce$s"
+        // temperature
+        CELSIUS -> "degree$s Celsius"
+        FAHRENHEIT -> "degree$s Fahrenheit"
+        KELVIN -> "Kelvin$s"
 
         else -> "Unknown unit"
     }
