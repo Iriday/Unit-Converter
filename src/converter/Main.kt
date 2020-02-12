@@ -3,37 +3,43 @@ package converter
 import converter.Unit.*
 
 fun main() {
-    while (true) {
-        print("Enter what you want to convert (or exit): ")
+    Main().run()
+}
 
-        val input = readLine()!!.split(" ")
+class Main {
+    fun run() {
+        while (true) {
+            print("Enter what you want to convert (or exit): ")
 
-        if (input.size == 1) {
-            if (input[0].toLowerCase().equals("exit")) {
-                return
-            } else {
+            val input = readLine()!!.split(" ")
+
+            if (input.size == 1) {
+                if (input[0].toLowerCase().equals("exit")) {
+                    return
+                } else {
+                    println("Incorrect input")
+                    continue
+                }
+            }
+            if (input.size != 4) {
                 println("Incorrect input")
                 continue
             }
-        }
-        if (input.size != 4) {
-            println("Incorrect input")
-            continue
-        }
 
-        val inValue = input[0].toDouble()
-        val enumInUnit = Unit.getUnit(input[1])
-        val enumOutUnit = Unit.getUnit(input[3])
+            val inValue = input[0].toDouble()
+            val enumInUnit = Unit.getUnit(input[1])
+            val enumOutUnit = Unit.getUnit(input[3])
 
-        val meters: Double = toMeters(inValue, enumInUnit)
-        val grams: Double = toGrams(inValue, enumInUnit)
-        if (meters == -1.0 && grams == -1.0) {
-            println("Incorrect input")
-            continue
+            val meters: Double = toMeters(inValue, enumInUnit)
+            val grams: Double = toGrams(inValue, enumInUnit)
+            if (meters == -1.0 && grams == -1.0) {
+                println("Incorrect input")
+                continue
+            }
+            val outValue = if (meters != -1.0) metersTo(meters, enumOutUnit) else gramsTo(grams, enumOutUnit)
+
+            println(createOutputString(enumInUnit, inValue, enumOutUnit, outValue))
         }
-        val outValue = if (meters != -1.0) metersTo(meters, enumOutUnit) else gramsTo(grams, enumOutUnit)
-
-        println(createOutputString(enumInUnit, inValue, enumOutUnit, outValue))
     }
 }
 
