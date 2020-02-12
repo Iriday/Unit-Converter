@@ -87,5 +87,3 @@ fun fahrenheitToKelvin(value: Double): Double = (value + 459.67) * 5 / 9
 fun kelvinToCelsius(value: Double): Double = value - 273.15
 
 fun kelvinToFahrenheit(value: Double): Double = value * 9 / 5 - 459.67
-
-

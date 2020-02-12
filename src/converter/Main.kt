@@ -1,22 +1,23 @@
 package converter
 
 import converter.Unit.*
+import converter.Type.*
 
 fun main() {
     Main().run()
 }
 
-private val regexInput =
-    Regex("(?i) *-?(\\d+|\\d+.\\d+) +([a-z]+|degree[s]? +(celsius|fahrenheit)) +[a-z]+ +([a-z]+|degree[s]? +(celsius|fahrenheit)) *")
+private val regexCheckInput =
+    Regex("(?i)\\s*[-+]?(\\d+|\\d+.\\d+)\\s+([a-z]+|degree[s]?\\s+[a-z]+)\\s+[^\\s]+\\s+([a-z]+|degree[s]?\\s+[a-z]+)\\s*")
 
-private val regexSplit = Regex("\\s+(degree[s]?\\s+)?")
+private val regexSplitInput = Regex("\\s+")
 
 class Main {
     fun run() {
         while (true) {
             print("Enter what you want to convert (or exit): ")
 
-            val notParsedInput = readLine()!!.trim()
+            val notParsedInput = readLine()!!.trim().toLowerCase()
             if (notParsedInput.toLowerCase() == "exit") {
                 return
             }
@@ -26,36 +27,64 @@ class Main {
                 continue
             }
 
-            val inValue = input[0].toDouble()
+            val inValue = input[0].toDouble() // checked
             val enumInUnit = Unit.getUnit(input[1])
             val enumOutUnit = Unit.getUnit(input[2])
 
-
-            val outValue = when (enumInUnit) {
-                METER, KILOMETER, CENTIMETER, MILLIMETER, MILE, YARD, FOOT, INCH -> {
-                    metersTo(toMeters(inValue, enumInUnit), enumOutUnit)
-                }
-                GRAM, KILOGRAM, MILLIGRAM, POUND, OUNCE -> {
-                    gramsTo(toGrams(inValue, enumInUnit), enumOutUnit)
-                }
-                CELSIUS -> celsiusTo(inValue, enumOutUnit)
-                FAHRENHEIT -> fahrenheitTo(inValue, enumOutUnit)
-                KELVIN -> kelvinTo(inValue, enumOutUnit)
-
-                else -> Double.MIN_VALUE //String
+            if (!isConversionPossible(enumInUnit, enumOutUnit)) {
+                val i = convertTypeName(enumInUnit, 2.0)
+                val o = convertTypeName(enumOutUnit, 2.0)
+                println("Conversion from $i to $o is impossible")
+                continue
             }
+            if ((enumInUnit.type == LENGTH || enumInUnit.type == WEIGHT) && inValue < 0) {
+                println("${enumInUnit.type.name.toLowerCase().capitalize()} shouldn't be negative")
+                continue
+            }
+
+            val outValue = convert(inValue, enumInUnit, enumOutUnit)
 
             println(createOutputString(enumInUnit, inValue, enumOutUnit, outValue))
         }
     }
 
     private fun parseInput(input: String): List<String> {
-
-        if (input.matches(regexInput)) {
-            val list = input.split(regexSplit)
-            return listOf(list[0], list[1], list[3])
+        if (input.matches(regexCheckInput)) {
+            val data = input.split(regexSplitInput)
+            if (data.size == 4) {
+                return listOf(data[0], data[1], data[3])
+            }
+            if (data.size == 5) {
+                if (data[1] == "degree" || data[1] == "degrees")
+                    return listOf(data[0], data[1] + " " + data[2], data[4])
+                if (data[3] == "degree" || data[3] == "degrees")
+                    return listOf(data[0], data[1], data[3] + " " + data[4])
+            }
+            if (data.size == 6) {
+                return listOf(data[0], data[1] + " " + data[2], data[4] + " " + data[5])
+            }
         }
         return emptyList()
+    }
+}
+
+fun isConversionPossible(inUnit: Unit, outUnit: Unit): Boolean {
+    return inUnit.type == outUnit.type && inUnit.type != Type.UNKNOWN
+}
+
+fun convert(inValue: Double, inUnit: Unit, outUnit: Unit): Double {
+    return when (inUnit) {
+        METER, KILOMETER, CENTIMETER, MILLIMETER, MILE, YARD, FOOT, INCH -> {
+            metersTo(toMeters(inValue, inUnit), outUnit)
+        }
+        GRAM, KILOGRAM, MILLIGRAM, POUND, OUNCE -> {
+            gramsTo(toGrams(inValue, inUnit), outUnit)
+        }
+        CELSIUS -> celsiusTo(inValue, outUnit)
+        FAHRENHEIT -> fahrenheitTo(inValue, outUnit)
+        KELVIN -> kelvinTo(inValue, outUnit)
+
+        else -> throw IllegalArgumentException()
     }
 }
 
@@ -89,7 +118,7 @@ fun convertTypeName(unit: Unit, value: Double): String {
         FAHRENHEIT -> "degree$s Fahrenheit"
         KELVIN -> "Kelvin$s"
 
-        else -> "Unknown unit"
+        else -> "???"
     }
 }
 
