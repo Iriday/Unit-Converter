@@ -18,7 +18,7 @@ class Main {
             print("Enter what you want to convert (or exit): ")
 
             val notParsedInput = readLine()!!.trim().toLowerCase()
-            if (notParsedInput.toLowerCase() == "exit") {
+            if (notParsedInput == "exit") {
                 return
             }
             val input = parseInput(notParsedInput)
