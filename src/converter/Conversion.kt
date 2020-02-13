@@ -54,6 +54,7 @@ fun gramsTo(value: Double, unit: Unit): Double {
 
 fun celsiusTo(value: Double, unit: Unit): Double {
     return when (unit) {
+        CELSIUS -> value
         FAHRENHEIT -> celsiusToFahrenheit(value)
         KELVIN -> celsiusToKelvin(value)
         else -> Double.MIN_VALUE
@@ -62,6 +63,7 @@ fun celsiusTo(value: Double, unit: Unit): Double {
 
 fun fahrenheitTo(value: Double, unit: Unit): Double {
     return when (unit) {
+        FAHRENHEIT -> value
         CELSIUS -> fahrenheitToCelsius(value)
         KELVIN -> fahrenheitToKelvin(value)
         else -> Double.MIN_VALUE
@@ -70,6 +72,7 @@ fun fahrenheitTo(value: Double, unit: Unit): Double {
 
 fun kelvinTo(value: Double, unit: Unit): Double {
     return when (unit) {
+        KELVIN -> value
         CELSIUS -> kelvinToCelsius(value)
         FAHRENHEIT -> kelvinToFahrenheit(value)
         else -> Double.MIN_VALUE
