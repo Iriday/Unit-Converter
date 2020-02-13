@@ -3,6 +3,7 @@ package converter
 import converter.Unit.*
 
 fun toMeters(value: Double, unit: Unit): Double {
+    if (value < 0) throw IllegalArgumentException()
     return when (unit) {
         METER -> value
         KILOMETER -> value * 1000
@@ -12,11 +13,12 @@ fun toMeters(value: Double, unit: Unit): Double {
         YARD -> value * 0.9144
         FOOT -> value * 0.3048
         INCH -> value * 0.0254
-        else -> -1.0
+        else -> throw IllegalArgumentException()
     }
 }
 
 fun metersTo(value: Double, unit: Unit): Double {
+    if (value < 0) throw IllegalArgumentException()
     return when (unit) {
         METER -> value
         KILOMETER -> value / 1000.0
@@ -26,29 +28,31 @@ fun metersTo(value: Double, unit: Unit): Double {
         YARD -> value / 0.9144
         FOOT -> value / 0.3048
         INCH -> value / 0.0254
-        else -> -1.0
+        else -> throw IllegalArgumentException()
     }
 }
 
 fun toGrams(value: Double, unit: Unit): Double {
+    if (value < 0) throw IllegalArgumentException()
     return when (unit) {
         GRAM -> value
         KILOGRAM -> value * 1000
         MILLIGRAM -> value * 0.001
         POUND -> value * 453.592
         OUNCE -> value * 28.3495
-        else -> -1.0
+        else -> throw IllegalArgumentException()
     }
 }
 
 fun gramsTo(value: Double, unit: Unit): Double {
+    if (value < 0) throw IllegalArgumentException()
     return when (unit) {
         GRAM -> value
         KILOGRAM -> value / 1000.0
         MILLIGRAM -> value / 0.001
         POUND -> value / 453.592
         OUNCE -> value / 28.3495
-        else -> -1.0
+        else -> throw IllegalArgumentException()
     }
 }
 
@@ -57,7 +61,7 @@ fun celsiusTo(value: Double, unit: Unit): Double {
         CELSIUS -> value
         FAHRENHEIT -> celsiusToFahrenheit(value)
         KELVIN -> celsiusToKelvin(value)
-        else -> Double.MIN_VALUE
+        else -> throw IllegalArgumentException()
     }
 }
 
@@ -66,7 +70,7 @@ fun fahrenheitTo(value: Double, unit: Unit): Double {
         FAHRENHEIT -> value
         CELSIUS -> fahrenheitToCelsius(value)
         KELVIN -> fahrenheitToKelvin(value)
-        else -> Double.MIN_VALUE
+        else -> throw IllegalArgumentException()
     }
 }
 
@@ -75,7 +79,7 @@ fun kelvinTo(value: Double, unit: Unit): Double {
         KELVIN -> value
         CELSIUS -> kelvinToCelsius(value)
         FAHRENHEIT -> kelvinToFahrenheit(value)
-        else -> Double.MIN_VALUE
+        else -> throw IllegalArgumentException()
     }
 }
 
