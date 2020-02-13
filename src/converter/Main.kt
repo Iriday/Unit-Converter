@@ -32,8 +32,8 @@ class Main {
             val enumOutUnit = Unit.getUnit(input[2])
 
             if (!isConversionPossible(enumInUnit, enumOutUnit)) {
-                val i = convertTypeName(enumInUnit, 2.0)
-                val o = convertTypeName(enumOutUnit, 2.0)
+                val i = convertUnitName(enumInUnit, 2.0)
+                val o = convertUnitName(enumOutUnit, 2.0)
                 println("Conversion from $i to $o is impossible")
                 continue
             }
@@ -89,13 +89,13 @@ fun convert(inValue: Double, inUnit: Unit, outUnit: Unit): Double {
 }
 
 fun createOutputString(inUnit: Unit, inValue: Double, outUnit: Unit, outValue: Double): String {
-    val iUnit = convertTypeName(inUnit, inValue)
-    val oUnit = convertTypeName(outUnit, outValue)
+    val iUnit = convertUnitName(inUnit, inValue)
+    val oUnit = convertUnitName(outUnit, outValue)
 
     return "$inValue $iUnit is $outValue $oUnit"
 }
 
-fun convertTypeName(unit: Unit, value: Double): String {
+fun convertUnitName(unit: Unit, value: Double): String {
     val s = s(value)
     return when (unit) {
         // length
