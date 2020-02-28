@@ -74,6 +74,9 @@ fun isConversionPossible(inUnit: Unit, outUnit: Unit): Boolean {
 
 fun convert(inValue: Double, inUnit: Unit, outUnit: Unit): Double {
     return when (inUnit) {
+        SECOND, WEEK, DAY, HOUR, MINUTE, MILLISECOND, NANOSECOND -> {
+            secondsTo(toSeconds(inValue, inUnit), outUnit)
+        }
         METER, KILOMETER, CENTIMETER, MILLIMETER, MILE, YARD, FOOT, INCH -> {
             metersTo(toMeters(inValue, inUnit), outUnit)
         }
@@ -98,6 +101,14 @@ fun createOutputString(inUnit: Unit, inValue: Double, outUnit: Unit, outValue: D
 fun convertUnitName(unit: Unit, value: Double): String {
     val s = s(value)
     return when (unit) {
+        // time
+        SECOND -> "second$s"
+        WEEK -> "week$s"
+        DAY -> "day$s"
+        HOUR -> "hour$s"
+        MINUTE -> "minute$s"
+        MILLISECOND -> "millisecond$s"
+        NANOSECOND -> "nanosecond$s"
         // length
         METER -> "meter$s"
         KILOMETER -> "kilometer$s"

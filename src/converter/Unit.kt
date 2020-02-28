@@ -3,6 +3,15 @@ package converter
 import converter.Type.*
 
 enum class Unit(val names: Array<String>, val type: Type) {
+    // time
+    SECOND(arrayOf("s", "sec", "second", "seconds"), TIME),
+    WEEK(arrayOf("w", "wk", "wks", "week", "weeks"), TIME),
+    DAY(arrayOf("d", "day", "days"), TIME),
+    HOUR(arrayOf("h", "hr", "hrs", "hour", "hours"), TIME),
+    MINUTE(arrayOf("min", "minute", "minutes"), TIME),
+    MILLISECOND(arrayOf("ms","msec", "millisec", "millisecond", "milliseconds"), TIME),
+    NANOSECOND(arrayOf("ns","nsec", "nanosec", "nanosecond", "nanoseconds"), TIME),
+
     // length
     METER(arrayOf("m", "meter", "meters"), LENGTH),
     KILOMETER(arrayOf("km", "kilometer", "kilometers"), LENGTH),

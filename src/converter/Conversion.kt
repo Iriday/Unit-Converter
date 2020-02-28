@@ -2,6 +2,34 @@ package converter
 
 import converter.Unit.*
 
+fun toSeconds(value: Double, unit: Unit): Double {
+    if (value < 0) throw IllegalArgumentException()
+    return when (unit) {
+        SECOND -> value
+        WEEK -> value * 604800.0
+        DAY -> value * 86400.0
+        HOUR -> value * 3600.0
+        MINUTE -> value * 60.0
+        MILLISECOND -> value / 1000.0
+        NANOSECOND -> value / 1e+9
+        else -> throw IllegalArgumentException()
+    }
+}
+
+fun secondsTo(value: Double, unit: Unit): Double {
+    if (value < 0) throw IllegalArgumentException()
+    return when (unit) {
+        SECOND -> value
+        WEEK -> value / 604800.0
+        DAY -> value / 86400.0
+        HOUR -> value / 3600.0
+        MINUTE -> value / 60.0
+        MILLISECOND -> value * 1000.0
+        NANOSECOND -> value * 1e+9
+        else -> throw IllegalArgumentException()
+    }
+}
+
 fun toMeters(value: Double, unit: Unit): Double {
     if (value < 0) throw IllegalArgumentException()
     return when (unit) {
