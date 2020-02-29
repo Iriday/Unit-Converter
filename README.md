@@ -1,6 +1,7 @@
 # Unit-Converter
 
 Supports:<br>
-Length: meters, kilometers, centimeters, millimeters, miles, yards, feet, inches.<br>
-Weight: grams, kilograms, milligrams, pounds, ounces.<br>
+Time: weeks, days, hours, minutes, seconds, milliseconds, nanoseconds.<br>
+Length: kilometers, meters, centimeters, millimeters, miles, yards, feet, inches.<br>
+Weight: kilograms, grams, milligrams, pounds, ounces.<br>
 Temperature: degrees Celsius, degrees Fahrenheit, kelvins.<br>
