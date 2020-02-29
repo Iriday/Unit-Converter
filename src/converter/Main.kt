@@ -100,30 +100,16 @@ fun createOutputString(inUnit: Unit, inValue: Double, outUnit: Unit, outValue: D
 
 fun convertUnitName(unit: Unit, value: Double): String {
     val s = s(value)
+    val simpleName = "${unit.name.toLowerCase()}$s"
     return when (unit) {
         // time
-        SECOND -> "second$s"
-        WEEK -> "week$s"
-        DAY -> "day$s"
-        HOUR -> "hour$s"
-        MINUTE -> "minute$s"
-        MILLISECOND -> "millisecond$s"
-        NANOSECOND -> "nanosecond$s"
+        SECOND, WEEK, DAY, HOUR, MINUTE, MILLISECOND, NANOSECOND -> simpleName
         // length
-        METER -> "meter$s"
-        KILOMETER -> "kilometer$s"
-        CENTIMETER -> "centimeter$s"
-        MILLIMETER -> "millimeter$s"
-        MILE -> "mile$s"
-        YARD -> "yard$s"
+        METER, KILOMETER, CENTIMETER, MILLIMETER, MILE, YARD -> simpleName
         FOOT -> if (value == 1.0) "foot" else "feet"
         INCH -> if (value == 1.0) "inch" else "inches"
         // weight
-        GRAM -> "gram$s"
-        KILOGRAM -> "kilogram$s"
-        MILLIGRAM -> "milligram$s"
-        POUND -> "pound$s"
-        OUNCE -> "ounce$s"
+        GRAM, KILOGRAM, MILLIGRAM, POUND, OUNCE -> simpleName
         // temperature
         CELSIUS -> "degree$s Celsius"
         FAHRENHEIT -> "degree$s Fahrenheit"
