@@ -9,8 +9,9 @@ enum class Unit(val names: Array<String>, val type: Type) {
     DAY(arrayOf("d", "day", "days"), TIME),
     HOUR(arrayOf("h", "hr", "hrs", "hour", "hours"), TIME),
     MINUTE(arrayOf("min", "minute", "minutes"), TIME),
-    MILLISECOND(arrayOf("ms","msec", "millisec", "millisecond", "milliseconds"), TIME),
-    NANOSECOND(arrayOf("ns","nsec", "nanosec", "nanosecond", "nanoseconds"), TIME),
+    MILLISECOND(arrayOf("ms", "msec", "millisec", "millisecond", "milliseconds"), TIME),
+    MICROSECOND(arrayOf("μs", "us", "microsec", "microsecond", "microseconds"), TIME),
+    NANOSECOND(arrayOf("ns", "nsec", "nanosec", "nanosecond", "nanoseconds"), TIME),
 
     // length
     METER(arrayOf("m", "meter", "meters"), LENGTH),

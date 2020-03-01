@@ -11,6 +11,7 @@ fun toSeconds(value: Double, unit: Unit): Double {
         HOUR -> value * 3600.0
         MINUTE -> value * 60.0
         MILLISECOND -> value / 1000.0
+        MICROSECOND -> value / 1e+6
         NANOSECOND -> value / 1e+9
         else -> throw IllegalArgumentException()
     }
@@ -25,6 +26,7 @@ fun secondsTo(value: Double, unit: Unit): Double {
         HOUR -> value / 3600.0
         MINUTE -> value / 60.0
         MILLISECOND -> value * 1000.0
+        MICROSECOND -> value * 1e+6
         NANOSECOND -> value * 1e+9
         else -> throw IllegalArgumentException()
     }

@@ -79,7 +79,7 @@ fun isConversionPossible(inUnit: Unit, outUnit: Unit): Boolean {
 
 fun convert(inValue: Double, inUnit: Unit, outUnit: Unit): Double {
     return when (inUnit) {
-        SECOND, WEEK, DAY, HOUR, MINUTE, MILLISECOND, NANOSECOND -> {
+        SECOND, WEEK, DAY, HOUR, MINUTE, MILLISECOND, MICROSECOND, NANOSECOND -> {
             secondsTo(toSeconds(inValue, inUnit), outUnit)
         }
         METER, KILOMETER, CENTIMETER, MILLIMETER, MILE, YARD, FOOT, INCH -> {
@@ -108,7 +108,7 @@ fun convertUnitName(unit: Unit, value: Double): String {
     val simpleName = "${unit.name.toLowerCase()}$s"
     return when (unit) {
         // time
-        SECOND, WEEK, DAY, HOUR, MINUTE, MILLISECOND, NANOSECOND -> simpleName
+        SECOND, WEEK, DAY, HOUR, MINUTE, MILLISECOND, MICROSECOND, NANOSECOND -> simpleName
         // length
         METER, KILOMETER, CENTIMETER, MILLIMETER, MILE, YARD -> simpleName
         FOOT -> if (value == 1.0) "foot" else "feet"
