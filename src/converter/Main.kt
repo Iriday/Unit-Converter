@@ -2,6 +2,7 @@ package converter
 
 import converter.Unit.*
 import converter.Type.*
+import kotlin.text.StringBuilder
 
 fun main() {
     Main().run()
@@ -12,14 +13,18 @@ private val regexCheckInput =
 
 private val regexSplitInput = Regex("\\s+")
 
+private val help = createHelpString()
+
 class Main {
     fun run() {
         while (true) {
-            print("Enter what you want to convert (or exit): ")
+            print("Enter what you want to convert (or help, exit): ")
 
             val notParsedInput = readLine()!!.trim().toLowerCase()
-            if (notParsedInput == "exit") {
-                return
+            if (notParsedInput == "exit") return
+            if (notParsedInput == "help") {
+                println(help)
+                continue
             }
             val input = parseInput(notParsedInput)
             if (input.isEmpty()) {
@@ -120,3 +125,26 @@ fun convertUnitName(unit: Unit, value: Double): String {
 }
 
 fun s(number: Double): String = if (number == 1.0) "" else "s"
+
+private fun createHelpString(): String {
+    return "\nExamples: 10 seconds to ms; 3 Km In Meters; 1500 g to kg; -20 degrees Celsius to Kelvins\n\n${unitsToString()}"
+}
+
+private fun unitsToString(): String {
+    val sb = StringBuilder()
+
+    var type = Unit.values()[0].type
+    sb.append("-->$type\n")
+    for (unit in Unit.values()) {
+        if (unit.type == Type.UNKNOWN) break
+        if (unit.type != type) {
+            type = unit.type
+            sb.append("-->$type\n")
+        }
+        sb.append("${unit.toString().toLowerCase().capitalize()}- ")
+        var first = true
+        unit.names.iterator().forEach { v -> if(!first) sb.append(", $v") else { sb.append(v); first = false} }
+        sb.append(".\n")
+    }
+    return sb.toString()
+}
