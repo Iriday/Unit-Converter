@@ -92,6 +92,9 @@ fun convert(inValue: Double, inUnit: Unit, outUnit: Unit): Double {
         FAHRENHEIT -> fahrenheitTo(inValue, outUnit)
         KELVIN -> kelvinTo(inValue, outUnit)
 
+        HERTZ, KILOHERTZ, MEGAHERTZ, GIGAHERTZ -> {
+            hertzTo(toHertz(inValue, inUnit), outUnit)
+        }
         else -> throw IllegalArgumentException()
     }
 }
@@ -119,6 +122,8 @@ fun convertUnitName(unit: Unit, value: Double): String {
         CELSIUS -> "degree$s Celsius"
         FAHRENHEIT -> "degree$s Fahrenheit"
         KELVIN -> "Kelvin$s"
+        // frequency
+        HERTZ, KILOHERTZ, MEGAHERTZ, GIGAHERTZ -> unit.name.toLowerCase()
 
         else -> "???"
     }

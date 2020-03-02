@@ -1,5 +1,5 @@
 package converter
 
 enum class Type {
-   TIME, LENGTH, WEIGHT, TEMPERATURE, UNKNOWN
+   TIME, LENGTH, WEIGHT, TEMPERATURE, FREQUENCY, UNKNOWN
 }

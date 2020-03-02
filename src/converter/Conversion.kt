@@ -124,3 +124,25 @@ fun fahrenheitToKelvin(value: Double): Double = (value + 459.67) * 5 / 9
 fun kelvinToCelsius(value: Double): Double = value - 273.15
 
 fun kelvinToFahrenheit(value: Double): Double = value * 9 / 5 - 459.67
+
+fun toHertz(value: Double, unit: Unit): Double {
+    if (value < 0) throw IllegalArgumentException()
+    return when (unit) {
+        HERTZ -> value
+        KILOHERTZ -> value * 1000.0
+        MEGAHERTZ -> value * 1e+6
+        GIGAHERTZ -> value * 1e+9
+        else -> throw IllegalArgumentException()
+    }
+}
+
+fun hertzTo(value: Double, unit: Unit): Double {
+    if (value < 0) throw IllegalArgumentException()
+    return when (unit) {
+        HERTZ -> value
+        KILOHERTZ -> value / 1000.0
+        MEGAHERTZ -> value / 1e+6
+        GIGAHERTZ -> value / 1e+9
+        else -> throw IllegalArgumentException()
+    }
+}

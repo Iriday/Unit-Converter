@@ -35,6 +35,12 @@ enum class Unit(val names: Array<String>, val type: Type) {
     FAHRENHEIT(arrayOf("f", "df", "fahrenheit", "degree fahrenheit", "degrees fahrenheit"), TEMPERATURE),
     KELVIN(arrayOf("k", "kelvin", "kelvins"), TEMPERATURE),
 
+    // frequency
+    HERTZ(arrayOf("hz", "hertz"), FREQUENCY),
+    KILOHERTZ(arrayOf("khz", "kilohertz"), FREQUENCY),
+    MEGAHERTZ(arrayOf("mhz", "megahertz"), FREQUENCY),
+    GIGAHERTZ(arrayOf("ghz", "gigahertz"), FREQUENCY),
+
     UNKNOWN(arrayOf("???"), Type.UNKNOWN);
 
 
