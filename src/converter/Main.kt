@@ -78,22 +78,17 @@ fun isConversionPossible(inUnit: Unit, outUnit: Unit): Boolean {
 }
 
 fun convert(inValue: Double, inUnit: Unit, outUnit: Unit): Double {
-    return when (inUnit) {
-        SECOND, WEEK, DAY, HOUR, MINUTE, MILLISECOND, MICROSECOND, NANOSECOND -> {
-            secondsTo(toSeconds(inValue, inUnit), outUnit)
-        }
-        METER, KILOMETER, CENTIMETER, MILLIMETER, MILE, YARD, FOOT, INCH -> {
-            metersTo(toMeters(inValue, inUnit), outUnit)
-        }
-        GRAM, KILOGRAM, MILLIGRAM, POUND, OUNCE -> {
-            gramsTo(toGrams(inValue, inUnit), outUnit)
-        }
-        CELSIUS -> celsiusTo(inValue, outUnit)
-        FAHRENHEIT -> fahrenheitTo(inValue, outUnit)
-        KELVIN -> kelvinTo(inValue, outUnit)
+    return when (inUnit.type) {
+        TIME -> secondsTo(toSeconds(inValue, inUnit), outUnit)
+        LENGTH -> metersTo(toMeters(inValue, inUnit), outUnit)
+        WEIGHT -> gramsTo(toGrams(inValue, inUnit), outUnit)
+        FREQUENCY -> hertzTo(toHertz(inValue, inUnit), outUnit)
 
-        HERTZ, KILOHERTZ, MEGAHERTZ, GIGAHERTZ -> {
-            hertzTo(toHertz(inValue, inUnit), outUnit)
+        TEMPERATURE -> when (inUnit) {
+            CELSIUS -> celsiusTo(inValue, outUnit)
+            FAHRENHEIT -> fahrenheitTo(inValue, outUnit)
+            KELVIN -> kelvinTo(inValue, outUnit)
+            else -> throw IllegalArgumentException()
         }
         else -> throw IllegalArgumentException()
     }
