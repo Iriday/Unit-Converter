@@ -2,6 +2,7 @@ package converter
 
 import converter.Unit.*
 import converter.Type.*
+import java.math.BigDecimal
 import kotlin.text.StringBuilder
 
 fun main() {
@@ -32,24 +33,24 @@ class Main {
                 continue
             }
 
-            val inValue = input[0].toDouble() // checked
+            val inValue = bD(input[0]) // checked
             val enumInUnit = Unit.getUnit(input[1])
             val enumOutUnit = Unit.getUnit(input[2])
 
             if (!isConversionPossible(enumInUnit, enumOutUnit)) {
-                val i = convertUnitName(enumInUnit, 2.0)
-                val o = convertUnitName(enumOutUnit, 2.0)
+                val i = convertUnitName(enumInUnit, TWO)
+                val o = convertUnitName(enumOutUnit, TWO)
                 println("Conversion from $i to $o is impossible")
                 continue
             }
-            if ((enumInUnit.type == LENGTH || enumInUnit.type == WEIGHT) && inValue < 0) {
+            if ((enumInUnit.type == LENGTH || enumInUnit.type == WEIGHT) && inValue < ZERO) {
                 println("${enumInUnit.type.name.toLowerCase().capitalize()} shouldn't be negative")
                 continue
             }
 
             val outValue = convert(inValue, enumInUnit, enumOutUnit)
 
-            println(createOutputString(enumInUnit, inValue, enumOutUnit, outValue))
+            println(createOutputString(enumInUnit, removeTrailingZeros(inValue), enumOutUnit, removeTrailingZeros(outValue)))
         }
     }
 
@@ -77,7 +78,7 @@ fun isConversionPossible(inUnit: Unit, outUnit: Unit): Boolean {
     return inUnit.type == outUnit.type && inUnit.type != Type.UNKNOWN
 }
 
-fun convert(inValue: Double, inUnit: Unit, outUnit: Unit): Double {
+fun convert(inValue: BigDecimal, inUnit: Unit, outUnit: Unit): BigDecimal {
     return when (inUnit.type) {
         TIME -> secondsTo(toSeconds(inValue, inUnit), outUnit)
         LENGTH -> metersTo(toMeters(inValue, inUnit), outUnit)
@@ -94,14 +95,14 @@ fun convert(inValue: Double, inUnit: Unit, outUnit: Unit): Double {
     }
 }
 
-fun createOutputString(inUnit: Unit, inValue: Double, outUnit: Unit, outValue: Double): String {
+fun createOutputString(inUnit: Unit, inValue: BigDecimal, outUnit: Unit, outValue: BigDecimal): String {
     val iUnit = convertUnitName(inUnit, inValue)
     val oUnit = convertUnitName(outUnit, outValue)
 
     return "$inValue $iUnit is $outValue $oUnit"
 }
 
-fun convertUnitName(unit: Unit, value: Double): String {
+fun convertUnitName(unit: Unit, value: BigDecimal): String {
     val s = s(value)
     val simpleName = "${unit.name.toLowerCase()}$s"
     return when (unit) {
@@ -109,8 +110,8 @@ fun convertUnitName(unit: Unit, value: Double): String {
         SECOND, WEEK, DAY, HOUR, MINUTE, MILLISECOND, MICROSECOND, NANOSECOND -> simpleName
         // length
         METER, KILOMETER, CENTIMETER, MILLIMETER, MILE, YARD -> simpleName
-        FOOT -> if (value == 1.0) "foot" else "feet"
-        INCH -> if (value == 1.0) "inch" else "inches"
+        FOOT -> if (value == ONE) "foot" else "feet"
+        INCH -> if (value == ONE) "inch" else "inches"
         // weight
         GRAM, KILOGRAM, MILLIGRAM, POUND, OUNCE -> simpleName
         // temperature
@@ -124,7 +125,7 @@ fun convertUnitName(unit: Unit, value: Double): String {
     }
 }
 
-fun s(number: Double): String = if (number == 1.0) "" else "s"
+fun s(number: BigDecimal): String = if (number == ONE) "" else "s"
 
 private fun createHelpString(): String {
     return "\nExamples: 10 seconds to ms; 3 Km In Meters; 1500 g to kg; -20 degrees Celsius to Kelvins\n\n${unitsToString()}"
