@@ -18,6 +18,8 @@ enum class Unit(val names: Array<String>, val type: Type) {
     KILOMETER(arrayOf("km", "kilometer", "kilometers"), LENGTH),
     CENTIMETER(arrayOf("cm", "centimeter", "centimeters"), LENGTH),
     MILLIMETER(arrayOf("mm", "millimeter", "millimeters"), LENGTH),
+    MICROMETER(arrayOf("μm", "micron", "microns", "micrometer", "micrometers"), LENGTH),
+    NANOMETER(arrayOf("nm", "nanometer", "nanometers"), LENGTH),
     MILE(arrayOf("mi", "mile", "miles"), LENGTH),
     YARD(arrayOf("yd", "yard", "yards"), LENGTH),
     FOOT(arrayOf("ft", "foot", "feet"), LENGTH),

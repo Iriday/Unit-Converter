@@ -109,7 +109,7 @@ fun convertUnitName(unit: Unit, value: BigDecimal): String {
         // time
         SECOND, WEEK, DAY, HOUR, MINUTE, MILLISECOND, MICROSECOND, NANOSECOND -> simpleName
         // length
-        METER, KILOMETER, CENTIMETER, MILLIMETER, MILE, YARD -> simpleName
+        METER, KILOMETER, CENTIMETER, MILLIMETER, MICROMETER, NANOMETER, MILE, YARD -> simpleName
         FOOT -> if (value == ONE) "foot" else "feet"
         INCH -> if (value == ONE) "inch" else "inches"
         // weight
