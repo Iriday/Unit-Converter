@@ -113,7 +113,7 @@ fun convertUnitName(unit: Unit, value: BigDecimal): String {
         FOOT -> if (value == ONE) "foot" else "feet"
         INCH -> if (value == ONE) "inch" else "inches"
         // weight
-        GRAM, KILOGRAM, MILLIGRAM, POUND, OUNCE -> simpleName
+        GRAM, KILOGRAM, MILLIGRAM, MICROGRAM, STONE, POUND, OUNCE -> simpleName
         // temperature
         CELSIUS -> "degree$s Celsius"
         FAHRENHEIT -> "degree$s Fahrenheit"

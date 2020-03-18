@@ -73,6 +73,8 @@ fun toGrams(value: BigDecimal, unit: Unit): BigDecimal {
         GRAM -> value
         KILOGRAM -> value * bD(1000.0)
         MILLIGRAM -> value * bD(0.001)
+        MICROGRAM -> value / bD(1e+6)
+        STONE -> value * bD(6350.29318)
         POUND -> value * bD(453.592)
         OUNCE -> value * bD(28.3495)
         else -> throw IllegalArgumentException()
@@ -85,6 +87,8 @@ fun gramsTo(value: BigDecimal, unit: Unit): BigDecimal {
         GRAM -> value
         KILOGRAM -> value / bD(1000.0)
         MILLIGRAM -> value / bD(0.001)
+        MICROGRAM -> value * bD(1e+6)
+        STONE -> value / bD(6350.29318)
         POUND -> value / bD(453.592)
         OUNCE -> value / bD(28.3495)
         else -> throw IllegalArgumentException()

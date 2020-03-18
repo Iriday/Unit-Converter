@@ -29,6 +29,8 @@ enum class Unit(val names: Array<String>, val type: Type) {
     GRAM(arrayOf("g", "gram", "grams"), WEIGHT),
     KILOGRAM(arrayOf("kg", "kilogram", "kilograms"), WEIGHT),
     MILLIGRAM(arrayOf("mg", "milligram", "milligrams"), WEIGHT),
+    MICROGRAM(arrayOf("μg", "mcg", "microgramme", "microgram", "micrograms"), WEIGHT),
+    STONE(arrayOf("st", "stone", "stones"), WEIGHT),
     POUND(arrayOf("lb", "pound", "pounds"), WEIGHT),
     OUNCE(arrayOf("oz", "ounce", "ounces"), WEIGHT),
 
