@@ -6,7 +6,7 @@ import java.math.BigDecimal
 import kotlin.text.StringBuilder
 
 fun main() {
-    Main().run()
+    UnitConverter().run()
 }
 
 private val regexCheckInput =
@@ -16,7 +16,7 @@ private val regexSplitInput = Regex("\\s+")
 
 private val help = createHelpString()
 
-class Main {
+class UnitConverter {
     fun run() {
         while (true) {
             print("Enter what you want to convert (or help, exit): ")
