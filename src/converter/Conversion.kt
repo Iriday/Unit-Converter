@@ -4,7 +4,7 @@ import converter.Unit.*
 import java.math.BigDecimal
 
 fun toSeconds(value: BigDecimal, unit: Unit): BigDecimal {
-    if (value < ZERO) throw IllegalArgumentException()
+    throwIfLessThanZero(value)
     return when (unit) {
         SECOND -> value
         WEEK -> value * bD(604800.0)
@@ -19,7 +19,7 @@ fun toSeconds(value: BigDecimal, unit: Unit): BigDecimal {
 }
 
 fun secondsTo(value: BigDecimal, unit: Unit): BigDecimal {
-    if (value < ZERO) throw IllegalArgumentException()
+    throwIfLessThanZero(value)
     return when (unit) {
         SECOND -> value
         WEEK -> value / bD(604800.0)
@@ -34,7 +34,7 @@ fun secondsTo(value: BigDecimal, unit: Unit): BigDecimal {
 }
 
 fun toMeters(value: BigDecimal, unit: Unit): BigDecimal {
-    if (value < ZERO) throw IllegalArgumentException()
+    throwIfLessThanZero(value)
     return when (unit) {
         METER -> value
         KILOMETER -> value * bD(1000.0)
@@ -51,7 +51,7 @@ fun toMeters(value: BigDecimal, unit: Unit): BigDecimal {
 }
 
 fun metersTo(value: BigDecimal, unit: Unit): BigDecimal {
-    if (value < ZERO) throw IllegalArgumentException()
+    throwIfLessThanZero(value)
     return when (unit) {
         METER -> value
         KILOMETER -> value / bD(1000.0)
@@ -68,7 +68,7 @@ fun metersTo(value: BigDecimal, unit: Unit): BigDecimal {
 }
 
 fun toGrams(value: BigDecimal, unit: Unit): BigDecimal {
-    if (value < ZERO) throw IllegalArgumentException()
+    throwIfLessThanZero(value)
     return when (unit) {
         GRAM -> value
         KILOGRAM -> value * bD(1000.0)
@@ -82,7 +82,7 @@ fun toGrams(value: BigDecimal, unit: Unit): BigDecimal {
 }
 
 fun gramsTo(value: BigDecimal, unit: Unit): BigDecimal {
-    if (value < ZERO) throw IllegalArgumentException()
+    throwIfLessThanZero(value)
     return when (unit) {
         GRAM -> value
         KILOGRAM -> value / bD(1000.0)
@@ -135,7 +135,7 @@ fun kelvinToCelsius(value: BigDecimal): BigDecimal = value - bD(273.15)
 fun kelvinToFahrenheit(value: BigDecimal): BigDecimal = value * bD(9.0) / bD(5.0) - bD(459.67)
 
 fun toHertz(value: BigDecimal, unit: Unit): BigDecimal {
-    if (value < ZERO) throw IllegalArgumentException()
+    throwIfLessThanZero(value)
     return when (unit) {
         HERTZ -> value
         KILOHERTZ -> value * bD(1000.0)
@@ -146,7 +146,7 @@ fun toHertz(value: BigDecimal, unit: Unit): BigDecimal {
 }
 
 fun hertzTo(value: BigDecimal, unit: Unit): BigDecimal {
-    if (value < ZERO) throw IllegalArgumentException()
+    throwIfLessThanZero(value)
     return when (unit) {
         HERTZ -> value
         KILOHERTZ -> value / bD(1000.0)

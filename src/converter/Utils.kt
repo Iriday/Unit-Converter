@@ -22,3 +22,8 @@ fun removeTrailingZeros(value: BigDecimal): BigDecimal {
         BigDecimal(value.toString().replace(regexTrailingZeros, ""))
     else value
 }
+
+fun throwIfLessThanZero(value: BigDecimal) {
+    if (value < ZERO) throw IllegalArgumentException("Value should be >= 0")
+}
+
